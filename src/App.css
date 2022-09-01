@@ -4,19 +4,21 @@
   background-repeat: no-repeat;
   padding-top: 2em;
   position: relative;
+  height: 250px;
 }
 .back-card {
   background-image: url("./assets/bg-card-back.png");
   background-size: contain;
   background-repeat: no-repeat;
-  width: 250px;
+  width: 300px;
   height: 200px;
   left: 20%;
+
   position: relative;
 }
 .back-card p {
   position: absolute;
-  top: 30%;
+  top: 70px;
   left: 80%;
   font-size: 0.8rem;
 }
@@ -24,10 +26,10 @@
   background-image: url("./assets/bg-card-front.png");
   background-size: contain;
   background-repeat: no-repeat;
-  width: 250px;
-  height: 140px;
+  width: 300px;
+  height: 200px;
   position: absolute;
-  top: 48.5%;
+  top: 51%;
   left: 8%;
   padding: 0.5em 1em;
   display: flex;
@@ -96,4 +98,86 @@ input::placeholder {
 .expiry-date > div {
   display: flex;
   gap: 10px;
+}
+.done {
+  width: 80vw;
+  margin: auto;
+}
+.done > * {
+  width: fit-content;
+  margin: auto;
+}
+.done > h1 {
+  margin-block: 1em;
+}
+.done > p {
+  margin-bottom: 2em;
+}
+.done > button {
+  width: 100%;
+}
+.done h1 {
+  color: var(--clr-dark-violet);
+}
+.done p {
+  color: var(--clr-dark-gray-violet);
+}
+@media screen and (max-width: 351px) {
+  .other-card-details {
+    display: block;
+  }
+}
+@media screen and (min-width: 919px) {
+  * {
+    margin: 0;
+  }
+  .body {
+    display: flex;
+    gap: 10vw;
+  }
+  .first-section,
+  .second-section {
+    width: 50vw;
+    height: 100vh;
+  }
+  .done {
+    width: 30vw;
+  }
+  .first-section {
+    width: 40vw;
+    max-width: 500px;
+    background-image: url(./assets/bg-main-desktop.png);
+  }
+  .second-section {
+    display: grid;
+    place-content: center;
+  }
+  .front-card {
+    top: 25vh;
+    left: 60%;
+    width: 300px;
+  }
+  .back-card {
+    top: 50vh;
+    left: 50%;
+    width: 300px;
+  }
+  form {
+    width: 30vw;
+  }
+  body {
+    outline: 1px solid blue;
+    margin: 0;
+    overflow-y: hidden;
+  }
+}
+
+@media screen and (min-width: 1120px) {
+  .front-card,
+  .back-card {
+    width: 500px;
+  }
+  .front-card {
+    top: 20vh;
+  }
 }
