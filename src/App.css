@@ -39,8 +39,9 @@ img {
   width: 55px;
 }
 .card-number {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  font-size: 1.47rem;
 }
 .details {
   display: flex;
@@ -108,6 +109,7 @@ input::placeholder {
 .done {
   width: 80vw;
   margin: auto;
+  margin-top: 100px;
 }
 .done > * {
   width: fit-content;
@@ -145,6 +147,7 @@ input::placeholder {
   .second-section {
     width: 50vw;
     height: 100vh;
+    margin: 0;
   }
   .done {
     width: 30vw;
@@ -184,10 +187,18 @@ input::placeholder {
     width: 370px;
     background-size: cover;
   }
+  form,
+  .done {
+    max-width: 400px;
+    margin-top: -100px;
+  }
   .front-card {
     top: 20vh;
     display: flex;
     padding-bottom: 50px;
+  }
+  .card-number {
+    font-size: 1.9rem;
   }
   .front-card div {
     margin-top: auto;

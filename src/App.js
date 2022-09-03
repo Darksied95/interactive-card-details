@@ -61,6 +61,7 @@ const App = () => {
     setErrors({});
     setUser(initialUserDetails);
   };
+
   return (
     <div className="body">
       <FirstSection user={user} />
