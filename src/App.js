@@ -5,14 +5,16 @@ import done from "./assets/icon-complete.svg";
 import "./App.css";
 
 const App = () => {
-  const [user, setUser] = useState({
+  let initialUserDetails = {
     cardName: "",
     cardNumber: "",
     month: "",
     year: "",
     cvc: "",
-  });
+  };
+  const [user, setUser] = useState(initialUserDetails);
   const [errors, setErrors] = useState({});
+  const [notSubmitted, setNotSubmitted] = useState(true);
 
   const schema = Joi.object({
     cardName: Joi.string().min(3).max(28).required(),
@@ -26,8 +28,13 @@ const App = () => {
     cvc: Joi.number().min(100).max(999).required(),
   });
   const validated = () => {
-    let errors = schema.validate(user, { abortEarly: false });
-    setErrors(errors);
+    let { error } = schema.validate(user, { abortEarly: false });
+    if (!error) return null;
+    let errorsObject = {};
+    for (let errors of error.details) {
+      errorsObject[errors.path] = errors.message;
+    }
+    setErrors(errorsObject);
     return errors;
   };
   const handleUserChange = ({ target }) => {
@@ -43,8 +50,17 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors({});
+    let error = validated();
+    if (!error) {
+      setNotSubmitted(false);
+    }
   };
-
+  const restart = () => {
+    setNotSubmitted(true);
+    setErrors({});
+    setUser(initialUserDetails);
+  };
   return (
     <div className="body">
       <section className="first-section">
@@ -65,82 +81,96 @@ const App = () => {
         </div>
       </section>
       <section className="second-section">
-        <form>
-          <div>
-            <label htmlFor="name">CARDHOLDER NAME</label>
-            <input
-              id="name"
-              placeholder="e.g. Jane Appleseed"
-              name="cardName"
-              required={true}
-              maxLength={28}
-              value={user.cardName}
-              onChange={handleUserChange}
-            />
-            <p>Error</p>
-          </div>
-          <div>
-            <label htmlFor="number">CARD NUMBER</label>
-            <input
-              id="number"
-              placeholder="e.g. 1234 5678 9123 0000"
-              name="cardNumber"
-              maxLength="19"
-              required={true}
-              value={user.cardNumber}
-              onChange={handleUserChange}
-            />
-            {!!Object.keys(errors).length && <p>Wrong format, numbers only</p>}
-          </div>
-          <div className="other-card-details">
-            <div className="expiry-date">
-              <label htmlFor="expiry-date">EXP. DATE (MM/YY)</label>
-              <div>
-                <input
-                  id="expiry-date"
-                  placeholder="MM"
-                  max="12"
-                  maxLength="2"
-                  name="month"
-                  required
-                  value={user.month}
-                  onChange={handleUserChange}
-                />
-                <input
-                  placeholder="YY"
-                  name="year"
-                  maxLength="4"
-                  required
-                  value={user.year}
-                  onChange={handleUserChange}
-                />
-              </div>
-              <p>Error</p>
-            </div>
-            <div className="cvc">
-              <label htmlFor="cvc">CVC</label>
+        {notSubmitted ? (
+          <form>
+            <div>
+              <label htmlFor="name">CARDHOLDER NAME</label>
               <input
-                id="cvc"
-                placeholder="e.g. 123"
-                name="cvc"
-                maxLength={3}
-                required
-                value={user.cvc}
+                id="name"
+                placeholder="e.g. Jane Appleseed"
+                name="cardName"
+                required={true}
+                maxLength={28}
+                value={user.cardName}
                 onChange={handleUserChange}
+                className={errors.cardName && "error"}
               />
-              <p>Error</p>
+              {errors.cardName && (
+                <p className="error-message">Cannot be blank</p>
+              )}
             </div>
+            <div>
+              <label htmlFor="number">CARD NUMBER</label>
+              <input
+                id="number"
+                placeholder="e.g. 1234 5678 9123 0000"
+                name="cardNumber"
+                maxLength="19"
+                required={true}
+                value={user.cardNumber}
+                onChange={handleUserChange}
+                className={errors.cardNumber && "error"}
+              />
+              {errors.cardNumber && (
+                <p className="error-message">Wrong format, try again</p>
+              )}
+            </div>
+            <div className="other-card-details">
+              <div className="expiry-date">
+                <label htmlFor="expiry-date">EXP. DATE (MM/YY)</label>
+                <div>
+                  <input
+                    id="expiry-date"
+                    placeholder="MM"
+                    max="12"
+                    maxLength="2"
+                    name="month"
+                    required
+                    value={user.month}
+                    onChange={handleUserChange}
+                    className={errors.month && "error"}
+                  />
+                  <input
+                    placeholder="YY"
+                    name="year"
+                    maxLength="4"
+                    required
+                    value={user.year}
+                    onChange={handleUserChange}
+                    className={errors.year && "error"}
+                  />
+                </div>
+                {(errors.month || errors.year) && (
+                  <p className="error-message">Check date</p>
+                )}
+              </div>
+              <div className="cvc">
+                <label htmlFor="cvc">CVC</label>
+                <input
+                  id="cvc"
+                  placeholder="e.g. 123"
+                  name="cvc"
+                  maxLength={3}
+                  required
+                  value={user.cvc}
+                  onChange={handleUserChange}
+                  className={errors.cvc && "error"}
+                />
+                {errors.cvc && <p className="error-message">Check cvc</p>}
+              </div>
+            </div>
+            <button type="submit" onClick={handleSubmit}>
+              Confirm
+            </button>
+          </form>
+        ) : (
+          <div className="done">
+            <img src={done} alt="done-logo" />
+            <h1>THANK YOU!</h1>
+            <p>We've added your card details</p>
+            <button onClick={restart}>Continue</button>
           </div>
-          <button type="submit" onClick={handleSubmit}>
-            Confirm
-          </button>
-        </form>
-        <div className="done">
-          <img src={done} alt="done-logo" />
-          <h1>THANK YOU!</h1>
-          <p>We've added your card details</p>
-          <button>Continue</button>
-        </div>
+        )}
       </section>
     </div>
   );
