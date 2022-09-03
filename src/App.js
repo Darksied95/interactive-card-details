@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Joi from "joi";
-import logo from "./assets/card-logo.svg";
 import done from "./assets/icon-complete.svg";
+import FirstSection from "./components/FirstSection";
+import SecondSection from "./components/SecondSection";
 import "./App.css";
 
 const App = () => {
@@ -63,115 +64,16 @@ const App = () => {
   };
   return (
     <div className="body">
-      <section className="first-section">
-        <div className="back-card">
-          <p>{user.cvc || "000"}</p>
-        </div>
-        <div className="front-card">
-          <img src={logo} alt="logo" className="logo" />
-          <p className="card-number">
-            {user.cardNumber || "0000 0000 0000 0000"}
-          </p>
-          <div className="details">
-            <p>{user.cardName.toUpperCase() || "JANE APPLESEED"}</p>
-            <p>
-              {user.month || "00"}/{user.year || "00"}
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className="second-section">
-        {notSubmitted ? (
-          <form>
-            <div>
-              <label htmlFor="name">CARDHOLDER NAME</label>
-              <input
-                id="name"
-                placeholder="e.g. Jane Appleseed"
-                name="cardName"
-                required={true}
-                maxLength={28}
-                value={user.cardName}
-                onChange={handleUserChange}
-                className={errors.cardName && "error"}
-              />
-              {errors.cardName && (
-                <p className="error-message">Cannot be blank</p>
-              )}
-            </div>
-            <div>
-              <label htmlFor="number">CARD NUMBER</label>
-              <input
-                id="number"
-                placeholder="e.g. 1234 5678 9123 0000"
-                name="cardNumber"
-                maxLength="19"
-                required={true}
-                value={user.cardNumber}
-                onChange={handleUserChange}
-                className={errors.cardNumber && "error"}
-              />
-              {errors.cardNumber && (
-                <p className="error-message">Wrong format, try again</p>
-              )}
-            </div>
-            <div className="other-card-details">
-              <div className="expiry-date">
-                <label htmlFor="expiry-date">EXP. DATE (MM/YY)</label>
-                <div>
-                  <input
-                    id="expiry-date"
-                    placeholder="MM"
-                    max="12"
-                    maxLength="2"
-                    name="month"
-                    required
-                    value={user.month}
-                    onChange={handleUserChange}
-                    className={errors.month && "error"}
-                  />
-                  <input
-                    placeholder="YY"
-                    name="year"
-                    maxLength="4"
-                    required
-                    value={user.year}
-                    onChange={handleUserChange}
-                    className={errors.year && "error"}
-                  />
-                </div>
-                {(errors.month || errors.year) && (
-                  <p className="error-message">Check date</p>
-                )}
-              </div>
-              <div className="cvc">
-                <label htmlFor="cvc">CVC</label>
-                <input
-                  id="cvc"
-                  placeholder="e.g. 123"
-                  name="cvc"
-                  maxLength={3}
-                  required
-                  value={user.cvc}
-                  onChange={handleUserChange}
-                  className={errors.cvc && "error"}
-                />
-                {errors.cvc && <p className="error-message">Check cvc</p>}
-              </div>
-            </div>
-            <button type="submit" onClick={handleSubmit}>
-              Confirm
-            </button>
-          </form>
-        ) : (
-          <div className="done">
-            <img src={done} alt="done-logo" />
-            <h1>THANK YOU!</h1>
-            <p>We've added your card details</p>
-            <button onClick={restart}>Continue</button>
-          </div>
-        )}
-      </section>
+      <FirstSection user={user} />
+      <SecondSection
+        notSubmitted={notSubmitted}
+        done={done}
+        user={user}
+        handleUserChange={handleUserChange}
+        handleSubmit={handleSubmit}
+        restart={restart}
+        errors={errors}
+      />
     </div>
   );
 };
