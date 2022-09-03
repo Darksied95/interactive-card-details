@@ -28,7 +28,7 @@ const App = () => {
     year: Joi.number().min(2022).max(9999).required(),
     cvc: Joi.number().min(100).max(999).required(),
   });
-  const validated = () => {
+  const validate = () => {
     let { error } = schema.validate(user, { abortEarly: false });
     if (!error) return null;
     let errorsObject = {};
@@ -40,7 +40,6 @@ const App = () => {
   };
   const handleUserChange = ({ target }) => {
     let newUser = { ...user };
-
     if (target.name === "cardNumber") {
       newUser["cardNumber"] = (target.value.match(/\w{1,4}/g) || []).join(" ");
     } else {
@@ -52,7 +51,7 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    let error = validated();
+    let error = validate();
     if (!error) {
       setNotSubmitted(false);
     }
