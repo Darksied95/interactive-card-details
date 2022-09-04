@@ -21,7 +21,7 @@ const Form = ({ user, errors, handleUserChange, handleSubmit, handleBlur }) => {
         maxLength={maxLength}
         max={max}
         onChange={onChange}
-        onBlur={handleBlur}
+        onBlur={onBlur}
         user={userInfo}
         errors={errorsInfo}
       />
