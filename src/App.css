@@ -146,6 +146,9 @@ input::placeholder {
     display: flex;
     gap: 10vw;
   }
+  .overflow {
+    overflow-x: unset;
+  }
   .first-section,
   .second-section {
     width: 50vw;
@@ -180,7 +183,6 @@ input::placeholder {
   body {
     outline: 1px solid blue;
     margin: 0;
-    overflow-y: hidden;
   }
 }
 
