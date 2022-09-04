@@ -16,7 +16,6 @@ const App = () => {
   const [user, setUser] = useState(initialUserDetails);
   const [errors, setErrors] = useState({});
   const [notSubmitted, setNotSubmitted] = useState(true);
-
   const ruleSets = {
     cardName: Joi.string().max(28).required(),
     cardNumber: Joi.string()
@@ -28,6 +27,8 @@ const App = () => {
     year: Joi.number().min(2022).max(9999).required(),
     cvc: Joi.number().min(100).max(999).required(),
   }
+
+
   const validateOnSubmit = () => {
     const schema = Joi.object(ruleSets);
     let { error } = schema.validate(user, { abortEarly: false });
@@ -53,14 +54,12 @@ const App = () => {
       setErrors({ cardName: '' })
     }
     const { path, message } = error.details[0]
-    console.log(path);
-    console.log(message);
+
     const newError = { [path]: message }
     setErrors(newError)
 
   }
   const handleUserChange = ({ target }) => {
-
     let newUser = { ...user };
     if (target.name === "cardNumber") {
       newUser["cardNumber"] = (target.value.match(/\w{1,4}/g) || []).join(" ");
@@ -70,7 +69,6 @@ const App = () => {
     setUser(newUser);
     validateOnChange(target)
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
