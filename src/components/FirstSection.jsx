@@ -10,7 +10,7 @@ const FirstSection = ({ user }) => {
       <div className="front-card">
         <img src={logo} alt="logo" className="logo" />
         <p className="card-number">
-          {user.cardNumber || "0000 0000 0000 0000"}
+          {user.cardNumber || "1234 5678 9123 0000"}
         </p>
         <div className="details">
           <p>{user.cardName.toUpperCase() || "JANE APPLESEED"}</p>

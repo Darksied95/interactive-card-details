@@ -50,9 +50,7 @@ const App = () => {
       setErrors({})
       return null
     }
-    if (user.cardName.length < 3) {
-      setErrors({ cardName: '' })
-    }
+
     const { path, message } = error.details[0]
 
     const newError = { [path]: message }
@@ -60,14 +58,19 @@ const App = () => {
 
   }
   const handleUserChange = ({ target }) => {
+
+    if (target.value.length === target.maxLength + 1) { return null }
     let newUser = { ...user };
-    if (target.name === "cardNumber") {
-      newUser["cardNumber"] = (target.value.match(/\w{1,4}/g) || []).join(" ");
-    } else {
-      newUser[target.name] = target.value;
-    }
+
+
+    (target.name === "cardNumber")
+      ?
+      (newUser["cardNumber"] = (target.value.match(/\w{1,4}/g) || []).join(" "))
+      :
+      (newUser[target.name] = target.value)
+
+
     setUser(newUser);
-    // validateOnChange(target)
   };
   const handleSubmit = (e) => {
     e.preventDefault();
