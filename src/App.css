@@ -6,6 +6,9 @@
   position: relative;
   height: 250px;
 }
+.overflow {
+  overflow-x: hidden;
+}
 .back-card {
   background-image: url("./assets/bg-card-back.png");
   background-size: contain;

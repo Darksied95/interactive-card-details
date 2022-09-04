@@ -4,8 +4,10 @@ import logo from "../assets/card-logo.svg";
 const FirstSection = ({ user }) => {
   return (
     <section className="first-section">
-      <div className="back-card">
-        <p>{user.cvc || "000"}</p>
+      <div className="overflow">
+        <div className="back-card">
+          <p>{user.cvc || "000"}</p>
+        </div>
       </div>
       <div className="front-card">
         <img src={logo} alt="logo" className="logo" />
