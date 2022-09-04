@@ -10,6 +10,7 @@ const SecondSection = ({
   handleSubmit,
   done,
   restart,
+  handleBlur,
 }) => {
   return (
     <section className="second-section">
@@ -19,6 +20,7 @@ const SecondSection = ({
           handleUserChange={handleUserChange}
           errors={errors}
           handleSubmit={handleSubmit}
+          handleBlur={handleBlur}
         />
       ) : (
         <Completed done={done} restart={restart} />

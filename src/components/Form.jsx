@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "./Input";
 
-const Form = ({ user, errors, handleUserChange, handleSubmit }) => {
+const Form = ({ user, errors, handleUserChange, handleSubmit, handleBlur }) => {
   function renderInput(
     name,
     label,
@@ -10,7 +10,8 @@ const Form = ({ user, errors, handleUserChange, handleSubmit }) => {
     max,
     userInfo = user,
     errorsInfo = errors,
-    changeHandler = handleUserChange
+    onChange = handleUserChange,
+    onBlur = handleBlur
   ) {
     return (
       <Input
@@ -19,7 +20,8 @@ const Form = ({ user, errors, handleUserChange, handleSubmit }) => {
         placeholder={placeholder}
         maxLength={maxLength}
         max={max}
-        changeHandler={changeHandler}
+        onChange={onChange}
+        onBlur={handleBlur}
         user={userInfo}
         errors={errorsInfo}
       />
@@ -60,6 +62,7 @@ const Form = ({ user, errors, handleUserChange, handleSubmit }) => {
           {errors.cvc && <p className="error-message">Check cvc</p>}
         </div>
       </div>
+
       <button type="submit" onClick={handleSubmit}>
         Confirm
       </button>

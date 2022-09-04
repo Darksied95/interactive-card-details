@@ -41,8 +41,8 @@ const App = () => {
     return errors;
   };
 
-  const validateOnChange = ({ name, value }) => {
-
+  const validateOnBlur = ({ target }) => {
+    const { name, value } = target
     const obj = { [name]: value }
     const schema = Joi.object({ [name]: ruleSets[name] })
     const { error } = schema.validate(obj)
@@ -67,7 +67,7 @@ const App = () => {
       newUser[target.name] = target.value;
     }
     setUser(newUser);
-    validateOnChange(target)
+    // validateOnChange(target)
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,6 +94,7 @@ const App = () => {
         handleSubmit={handleSubmit}
         restart={restart}
         errors={errors}
+        handleBlur={validateOnBlur}
       />
     </div>
   );
