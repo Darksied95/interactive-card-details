@@ -5,6 +5,7 @@ import FirstSection from "./components/FirstSection";
 import SecondSection from "./components/SecondSection";
 import "./App.css";
 
+export const SecondSectionContext = React.createContext()
 const App = () => {
   let initialUserDetails = {
     cardName: "",
@@ -89,16 +90,13 @@ const App = () => {
   return (
     <div className="body">
       <FirstSection user={user} />
-      <SecondSection
-        notSubmitted={notSubmitted}
-        done={done}
-        user={user}
-        handleUserChange={handleUserChange}
-        handleSubmit={handleSubmit}
-        restart={restart}
-        errors={errors}
-        handleBlur={validateOnBlur}
-      />
+      <SecondSectionContext.Provider value={{ user, handleUserChange, handleSubmit, validateOnBlur, errors, }}>
+        <SecondSection
+          notSubmitted={notSubmitted}
+          done={done}
+          restart={restart}
+        />
+      </SecondSectionContext.Provider >
     </div>
   );
 };

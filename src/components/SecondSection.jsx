@@ -1,15 +1,10 @@
 import React from "react";
 import Completed from "./Completed";
 import Form from "./Form";
-
-const SecondSection = ({ notSubmitted, done, restart, ...rest }) => {
+const SecondSection = ({ notSubmitted, done, restart }) => {
   return (
     <section className="second-section">
-      {notSubmitted ? (
-        <Form {...rest} />
-      ) : (
-        <Completed done={done} restart={restart} />
-      )}
+      {notSubmitted ? <Form /> : <Completed done={done} restart={restart} />}
     </section>
   );
 };

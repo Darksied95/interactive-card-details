@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Input from "./Input";
+import { SecondSectionContext } from "../App";
 
-const Form = ({ user, errors, handleUserChange, handleSubmit, handleBlur }) => {
+const Form = () => {
+  const { errors, handleSubmit, handleUserChange, user, validateOnBlur } =
+    useContext(SecondSectionContext);
   function renderInput(
     name,
     label,
@@ -11,7 +14,7 @@ const Form = ({ user, errors, handleUserChange, handleSubmit, handleBlur }) => {
     userInfo = user,
     errorsInfo = errors,
     onChange = handleUserChange,
-    onBlur = handleBlur
+    onBlur = validateOnBlur
   ) {
     return (
       <Input
